@@ -36,7 +36,7 @@ export default function Topbar() {
                         <span className='topbarIconBadge'>1</span>
                     </div>
                 </div>
-                <img src='https://images.pexels.com/photos/1468379/pexels-photo-1468379.jpeg?auto=compress&cs=tinysrgb&w=600' alt='profile' className='topbarImg' />
+                <img src='./assets/user/1.jpg' alt='profile' className='topbarImg' />
             </div>
         </div>
     )
