@@ -3,6 +3,7 @@ import { Users } from "../../dummyData";
 import Online from "../online/Online";
 
 export default function Rightbar({ profile }) {
+    const imgUrl = process.env.REACT_APP_IMG_URL
     const HomeRightbar = () => {
         return (
             <>
@@ -48,7 +49,7 @@ export default function Rightbar({ profile }) {
                 <div className="rightbarFollowings">
                     <div className="rightbarFollowing">
                         <img
-                            src="assets/user/10.jpg"
+                            src={`${imgUrl}user/10.jpg`}
                             alt=""
                             className="rightbarFollowingImg"
                         />
@@ -56,7 +57,7 @@ export default function Rightbar({ profile }) {
                     </div>
                     <div className="rightbarFollowing">
                         <img
-                            src="assets/user/2.jpg"
+                            src={`${imgUrl}user/2.jpg`}
                             alt=""
                             className="rightbarFollowingImg"
                         />
@@ -64,7 +65,7 @@ export default function Rightbar({ profile }) {
                     </div>
                     <div className="rightbarFollowing">
                         <img
-                            src="assets/user/3.jpg"
+                            src={`${imgUrl}user/3.jpg`}
                             alt=""
                             className="rightbarFollowingImg"
                         />
@@ -72,7 +73,7 @@ export default function Rightbar({ profile }) {
                     </div>
                     <div className="rightbarFollowing">
                         <img
-                            src="assets/user/4.jpg"
+                            src={`${imgUrl}user/4.jpg`}
                             alt=""
                             className="rightbarFollowingImg"
                         />
@@ -80,7 +81,7 @@ export default function Rightbar({ profile }) {
                     </div>
                     <div className="rightbarFollowing">
                         <img
-                            src="assets/user/5.jpg"
+                            src={`${imgUrl}user/5.jpg`}
                             alt=""
                             className="rightbarFollowingImg"
                         />
@@ -88,7 +89,7 @@ export default function Rightbar({ profile }) {
                     </div>
                     <div className="rightbarFollowing">
                         <img
-                            src="assets/user/6.jpg"
+                            src={`${imgUrl}user/6.jpg`}
                             alt=""
                             className="rightbarFollowingImg"
                         />

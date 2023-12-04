@@ -4,12 +4,17 @@ import PersonIcon from '@mui/icons-material/Person';
 import NotificationsIcon from '@mui/icons-material/Notifications';
 import ChatIcon from '@mui/icons-material/Chat';
 import "./topbar.css"
+import { Link } from 'react-router-dom';
 
 export default function Topbar() {
+    const imgUrl = process.env.REACT_APP_IMG_URL
     return (
         <div className="topbarContainer">
             <div className="topbarLeft">
-                <span className='logo-title'>SocailConnect</span>
+                <Link to="/" style={{ textDecoration: "none" }}>
+
+                    <span className='logo-title'>SocailConnect</span>
+                </Link>
             </div>
             <div className="topbarCenter">
                 <div className="searchbar">
@@ -36,7 +41,7 @@ export default function Topbar() {
                         <span className='topbarIconBadge'>1</span>
                     </div>
                 </div>
-                <img src='./assets/user/1.jpg' alt='profile' className='topbarImg' />
+                <img src={imgUrl + "user/1.jpg"} alt='profile' className='topbarImg' />
             </div>
         </div>
     )
