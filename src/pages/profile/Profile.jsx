@@ -18,7 +18,7 @@ export default function Profile() {
                         <div className="profileCover">
                             <img
                                 className="profileCoverImg"
-                                src={imgUrl + "post/p3.jpg"}
+                                src={imgUrl + "cover-art.png"}
                                 alt=""
                             />
                             <img
