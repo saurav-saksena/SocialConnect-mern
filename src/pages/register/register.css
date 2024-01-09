@@ -78,7 +78,8 @@
 .loginRegisterButton {
   width: 60%;
   align-self: center;
-  height: 50px;
+  padding: 10px;
+  text-align: center;
   border-radius: 10px;
   border: none;
   background-color: #42b72a;
@@ -86,4 +87,9 @@
   font-size: 20px;
   font-weight: 500;
   cursor: pointer;
+  display: block;
+  margin: auto;
+}
+a {
+  text-decoration: none;
 }

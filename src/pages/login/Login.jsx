@@ -1,6 +1,22 @@
+import { useContext, useState } from "react";
 import "./login.css";
+import SocialContext from "../../ContextStore/SocialContext";
+import { Link } from "react-router-dom";
 
 export default function Login() {
+    const [loginData, setLoginData] = useState({ email: "", password: "" })
+
+    const { loginApi } = useContext(SocialContext)
+    const handleChange = (e) => {
+        setLoginData({ ...loginData, [e.target.name]: e.target.value })
+    }
+
+    const handleSubmit = (e) => {
+        e.preventDefault()
+        console.log(loginData)
+        loginApi(loginData)
+
+    }
     return (
         <div className="login">
             <div className="loginWrapper">
@@ -11,15 +27,18 @@ export default function Login() {
                     </span>
                 </div>
                 <div className="loginRight">
-                    <div className="loginBox">
-                        <input placeholder="Email" className="loginInput" />
-                        <input placeholder="Password" className="loginInput" />
+                    <form onSubmit={handleSubmit} className="loginBox">
+
+                        <input onChange={handleChange} required name="email" value={loginData.email} placeholder="Email" className="loginInput" />
+                        <input placeholder="Password" required type="password" name="password" onChange={handleChange} value={loginData.password} className="loginInput" />
                         <button className="loginButton">Log In</button>
+
                         <span className="loginForgot">Forgot Password?</span>
-                        <button className="loginRegisterButton">
-                            Create a New Account
-                        </button>
-                    </div>
+                        <Link to="/register">
+
+                            <span className="create--account">Create a new Account</span>
+                        </Link>
+                    </form>
                 </div>
             </div>
         </div>
