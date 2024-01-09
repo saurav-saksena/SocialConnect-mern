@@ -72,7 +72,7 @@ export default function Store({ children }) {
     setUserinfo(null);
   };
   return (
-    <SocialContext.Provider value={{ loginApi, userinfo, logout }}>
+    <SocialContext.Provider value={{ loginApi, userinfo, logout, errorAlert }}>
       {children}
     </SocialContext.Provider>
   );

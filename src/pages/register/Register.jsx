@@ -1,7 +1,41 @@
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import "./register.css";
+import { useContext, useState } from "react";
+import SocialContext from "../../ContextStore/SocialContext";
 
 export default function Register() {
+    const [registerData, setRegisterData] = useState({ username: "", email: "", password: "", confirmpassword: "" })
+    const navigatge = useNavigate()
+    const { errorAlert } = useContext(SocialContext)
+    const handleChange = (e) => {
+        setRegisterData({ ...registerData, [e.target.name]: e.target.value })
+    }
+    const registerUser = async (item) => {
+        const response = await fetch("http://localhost:8000/api/auth/register", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify(item)
+        })
+        let result = await response.json()
+        if (result.success) {
+            navigatge("/login")
+
+        } else {
+            errorAlert(result.msg)
+        }
+
+    }
+    const handleSubmit = (e) => {
+        e.preventDefault()
+        if (registerData.password === registerData.confirmpassword) {
+
+            registerUser(registerData)
+        } else {
+            errorAlert("password do not match !")
+        }
+    }
     return (
         <div className="login">
             <div className="loginWrapper">
@@ -12,18 +46,18 @@ export default function Register() {
                     </span>
                 </div>
                 <div className="loginRight">
-                    <div className="loginBox">
-                        <input placeholder="Username" className="loginInput" />
-                        <input placeholder="Email" className="loginInput" />
-                        <input placeholder="Password" className="loginInput" />
-                        <input placeholder="Password Again" className="loginInput" />
+                    <form onSubmit={handleSubmit} className="loginBox">
+                        <input required name="username" onChange={handleChange} placeholder="Username" className="loginInput" />
+                        <input required name="email" onChange={handleChange} placeholder="Email" className="loginInput" />
+                        <input type="password" required name="password" onChange={handleChange} placeholder="Password" className="loginInput" />
+                        <input type="password" required name="confirmpassword" onChange={handleChange} placeholder="Password Again" className="loginInput" />
                         <button className="loginButton">Sign Up</button>
                         <Link to="/login">
                             <span className="loginRegisterButton">
                                 Log into Account
                             </span>
                         </Link>
-                    </div>
+                    </form>
                 </div>
             </div>
         </div>

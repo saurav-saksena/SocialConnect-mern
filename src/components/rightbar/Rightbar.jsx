@@ -1,12 +1,11 @@
 import "./rightbar.css";
 import { Users } from "../../dummyData";
 import Online from "../online/Online";
-import { useContext } from "react";
-import SocialContext from "../../ContextStore/SocialContext";
+
 
 export default function Rightbar({ user }) {
-    const { userinfo } = useContext(SocialContext)
-    console.log(userinfo)
+
+
     const imgUrl = process.env.REACT_APP_IMG_URL
     const HomeRightbar = () => {
         return (
