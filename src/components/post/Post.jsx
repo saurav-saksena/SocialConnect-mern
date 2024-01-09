@@ -8,7 +8,7 @@ import { Link } from "react-router-dom";
 
 export default function Post({ post }) {
     const [like, setLike] = useState(post.likes.length)
-    const [isLiked, setIsLiked] = useState(false)
+    const [isLiked, setIsLiked] = useState(post.likes.includes("65686033a016b1e7b142724b") ? true : false)
     const [user, setUser] = useState({})
     const imgUrl = process.env.REACT_APP_IMG_URL
     const formatter = buildFormatter(englishStrings)
@@ -45,7 +45,7 @@ export default function Post({ post }) {
                         <Link to={`/profile/${user._id}`} style={{ textDecoration: "none" }}>
                             <img
                                 className="postProfileImg"
-                                src={user.profilePicture || imgUrl + "no-profile.webp"}
+                                src={user.profilePicture ? imgUrl + user.profilePicture : imgUrl + "no-profile.webp"}
                                 alt=""
                             />
                         </Link>
@@ -64,7 +64,7 @@ export default function Post({ post }) {
                     </div>
                 </div>
                 <div className="postCenter">
-                    <span className="postText">{post?.desc}</span>
+                    <span className="postText">{post.desc}</span>
                     {post.img !== "" &&
                         <img className="postImg" src={imgUrl + "post/" + post.img} alt="..." />
                     }
@@ -72,8 +72,8 @@ export default function Post({ post }) {
                 <div className="postBottom">
                     <div className="postBottomLeft">
                         {/* <img className="likeIcon" src="assets/like.jpg" onClick={likeHandler} alt="" /> */}
-                        <img className="likeIcon" src={imgUrl + "heart.jpg"} onClick={likeHandler} alt="" />
-                        <span className="postLikeCounter"> {isLiked && "Including You "}{like} people like it</span>
+                        <img className="likeIcon" src={isLiked ? (`https://img.freepik.com/free-vector/glitter-heart_1048-4609.jpg`) : (`https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQe5FMQFXAJfrKEp95-Qv4QHxM3ZBUWWF83LfVUO2tzN_bJYmRNL1NlE_q4Aaq7TPoy7hQ&usqp=CAU`)} onClick={likeHandler} alt="" />
+                        <span className="postLikeCounter"> {like} {like > 1 ? "likes" : "like"}</span>
                     </div>
                     <div className="postBottomRight">
                         <span className="postCommentText">{post.comment} comments</span>
@@ -83,3 +83,4 @@ export default function Post({ post }) {
         </div>
     );
 }
+

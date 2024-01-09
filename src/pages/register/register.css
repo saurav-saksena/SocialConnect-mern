@@ -12,7 +12,12 @@
   height: 70%;
   display: flex;
 }
-
+@media (max-width: 600px) {
+  .loginWrapper {
+    display: block;
+    height: auto;
+  }
+}
 .loginLeft,
 .loginRight {
   flex: 1;

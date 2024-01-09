@@ -20,7 +20,7 @@ export default function Feed({ userId }) {
     useEffect(() => {
         getTimelinePost()
         // eslint-disable-next-line
-    }, [])
+    }, [userId])
 
     return (
         <div className="feed">
