@@ -3,7 +3,7 @@ import "./feed.css"
 
 import Share from '../share/Share'
 import Post from '../post/Post'
-
+import { Skeleton } from '@mui/material'
 
 export default function Feed({ userId }) {
     const [posts, setPosts] = useState([])
@@ -26,9 +26,13 @@ export default function Feed({ userId }) {
         <div className="feed">
             <div className="feedWrapper">
                 <Share />
-                {posts.map((data) => (
-                    <Post key={data._id} post={data} />
-                ))}
+                {posts.length === 0 ? (<div><Skeleton variant="text" sx={{ fontSize: '1rem' }} />
+                    <Skeleton variant="circular" width={40} height={40} />
+                    <Skeleton variant="rectangular" width={210} height={60} />
+                    <br />
+                    <Skeleton variant="rounded" width={210} height={60} /></div>) : posts.map((data) => (
+                        <Post key={data._id} post={data} />
+                    ))}
             </div>
         </div>
     )

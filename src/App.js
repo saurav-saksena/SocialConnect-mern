@@ -16,11 +16,23 @@ function App() {
         <Routes>
           <Route
             path="/"
-            element={userinfo ? <Home /> : <Navigate to="/login" />}
+            element={
+              localStorage.getItem("socialToken") ? (
+                <Home />
+              ) : (
+                <Navigate to="/login" />
+              )
+            }
           />
           <Route
             path="/profile/:userId"
-            element={userinfo ? <Profile /> : <Navigate to="/login" />}
+            element={
+              localStorage.getItem("socialToken") ? (
+                <Profile />
+              ) : (
+                <Navigate to="/login" />
+              )
+            }
           />
           <Route
             path="/register"
