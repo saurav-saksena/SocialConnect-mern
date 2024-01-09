@@ -1,8 +1,8 @@
 const router = require("express").Router();
 const User = require("../models/User");
-
+const Jwt = require("jsonwebtoken");
 const bcrypt = require("bcryptjs");
-
+const verifyuser = require("../verifyuser");
 // create new user for signup endpoint /api/auth/register method:POST
 router.post("/register", async (req, res) => {
   try {
@@ -61,10 +61,25 @@ router.post("/login", async (req, res) => {
     if (!validPassword) {
       return res.status(400).send({ msg: "invalid email or password" });
     }
-
-    res.send({ success: "Logged in successfully", user });
+    const data = {
+      user: {
+        id: user.id,
+      },
+    };
+    const authToken = Jwt.sign(data, process.env.SEC_KEY);
+    res.send({ success: true, authToken });
   } catch (error) {
     res.status(500).send({ msg: "something went wrong" });
+  }
+});
+
+router.get("/verifieduserdetails", verifyuser, async (req, res) => {
+  try {
+    const userid = req.user.id;
+    const user = await User.findById(userid).select("-password");
+    res.send({ success: true, user });
+  } catch (error) {
+    res.status(500).send({ msg: "server error" });
   }
 });
 module.exports = router;

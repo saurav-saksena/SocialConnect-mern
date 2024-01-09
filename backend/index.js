@@ -8,7 +8,7 @@ const postsRoute = require("./routes/posts");
 connectMongo();
 require("dotenv").config();
 
-// middleware
+// middlewares
 app.use(express.json());
 app.use(cors());
 
