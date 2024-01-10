@@ -3,12 +3,13 @@ import SocialContext from "./SocialContext";
 import { toast } from "react-toastify";
 
 export default function Store({ children }) {
-  const [userinfo, setUserinfo] = useState(null);
+  const [userinfo, setUserinfo] = useState({});
   useEffect(() => {
     const token = localStorage.getItem("socialToken");
     if (token) {
       verifiedUserDetails(token);
     }
+    // eslint-disable-next-line
   }, []);
   //success msg alert
   // const successAlert = (success) => {
@@ -29,22 +30,22 @@ export default function Store({ children }) {
   };
 
   // login function
-  const loginApi = async (item) => {
-    let response = await fetch("http://localhost:8000/api/auth/login", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(item),
-    });
-    response = await response.json();
-    if (response.success) {
-      verifiedUserDetails(response.authToken);
-      localStorage.setItem("socialToken", response.authToken);
-    } else {
-      errorAlert(response.msg);
-    }
-  };
+  // const loginApi = async (item) => {
+  //   let response = await fetch("http://localhost:8000/api/auth/login", {
+  //     method: "POST",
+  //     headers: {
+  //       "Content-Type": "application/json",
+  //     },
+  //     body: JSON.stringify(item),
+  //   });
+  //   response = await response.json();
+  //   if (response.success) {
+  //     verifiedUserDetails(response.authToken);
+  //     localStorage.setItem("socialToken", response.authToken);
+  //   } else {
+  //     errorAlert(response.msg);
+  //   }
+  // };
 
   //store usedetails in a variable after login for global state
   const verifiedUserDetails = async (token) => {
@@ -62,17 +63,19 @@ export default function Store({ children }) {
     if (result.success) {
       setUserinfo(result.user);
     } else {
-      console.log(result.msg);
+      errorAlert(result.msg);
     }
   };
 
-  // logout
-  const logout = () => {
-    localStorage.removeItem("socialToken");
-    setUserinfo(null);
-  };
+  // // logout
+  // const logout = () => {
+  //   localStorage.removeItem("socialToken");
+  //   setUserinfo({});
+  // };
   return (
-    <SocialContext.Provider value={{ loginApi, userinfo, logout, errorAlert }}>
+    <SocialContext.Provider
+      value={{ userinfo, errorAlert, verifiedUserDetails }}
+    >
       {children}
     </SocialContext.Provider>
   );

@@ -2,9 +2,17 @@ import React from 'react'
 import "./sidebar.css"
 import { Users } from "../../dummyData"
 import RssFeedIcon from '@mui/icons-material/RssFeed';
-import { Bookmark, Chat, Event, Group, HelpOutline, PlayCircleFilledOutlined, School, WorkOutline } from '@mui/icons-material';
+import { Bookmark, Chat, Event, Group, HelpOutline, PlayCircleFilledOutlined, WorkOutline } from '@mui/icons-material';
+import LogoutIcon from '@mui/icons-material/Logout';
 import CloseFriend from '../closefriend/CloseFriend';
+import { useNavigate } from 'react-router-dom';
 export default function Sidebar() {
+    const navigate = useNavigate()
+    const logout = () => {
+        localStorage.removeItem("socialToken")
+
+        navigate("/login")
+    }
     return (
         <>
             <div className='sidebar'>
@@ -42,14 +50,14 @@ export default function Sidebar() {
                             <Event className='sidebarIcon' />
                             <span className='sidebarListItemText'>Events</span>
                         </li>
-                        <li className='sidebarListItem'>
-                            <School className='sidebarIcon' />
-                            <span className='sidebarListItemText'>Courses</span>
+                        <li className='sidebarListItem' onClick={() => logout()} title='logout from this account'>
+                            <LogoutIcon className='sidebarIcon' />
+                            <span className='sidebarListItemText'>Logout</span>
                         </li>
                     </ul>
                     <button className="sidebarButton">Show More</button>
                     <hr className="sidebarHr" />
-                    <ul className='sidebarFriendList'>
+                    <ul className='sidebarFriendList' >
                         {Users.map(user => {
                             return <CloseFriend key={user.id} user={user} />
                         })}

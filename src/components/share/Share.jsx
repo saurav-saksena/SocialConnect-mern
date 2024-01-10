@@ -1,14 +1,22 @@
+import { useContext } from "react";
 import "./share.css";
 import { PermMedia, Label, Room, EmojiEmotions } from "@mui/icons-material"
+import SocialContext from "../../ContextStore/SocialContext";
+import { Link } from "react-router-dom";
 
 export default function Share() {
+    const { userinfo } = useContext(SocialContext)
+    const imgUrl = process.env.REACT_APP_IMG_URL
+
     return (
         <div className="share">
             <div className="shareWrapper">
                 <div className="shareTop">
-                    <img className="shareProfileImg" src="/assets/user/1.jpg" alt="" />
+                    <Link to={`/profile/${userinfo._id}`}>
+                        <img className="shareProfileImg" src={userinfo.profilePicture ? imgUrl + userinfo.profilePicture : imgUrl + "no-profile.webp"} alt="" />
+                    </Link>
                     <input
-                        placeholder="What's in your mind Saurav ?"
+                        placeholder={`What's in your mind ${userinfo.username} ?`}
                         className="shareInput"
                     />
                 </div>

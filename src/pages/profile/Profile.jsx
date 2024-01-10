@@ -4,11 +4,12 @@ import Topbar from "../../components/topbar/Topbar";
 import Sidebar from "../../components/sidebar/Sidebar";
 import Feed from "../../components/feed/Feed";
 import Rightbar from "../../components/rightbar/Rightbar";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 
 export default function Profile() {
     const [user, setUser] = useState({})
     const params = useParams()
+    const navigate = useNavigate()
     const imgUrl = process.env.REACT_APP_IMG_URL
     const getUserDetails = async () => {
         let response = await fetch("/users/" + params.userId, {
@@ -26,9 +27,14 @@ export default function Profile() {
         }
     }
     useEffect(() => {
-        getUserDetails()
+        if (localStorage.getItem("socialToken")) {
+
+            getUserDetails()
+        } else {
+            navigate("/login")
+        }
         // eslint-disable-next-line
-    }, [])
+    }, [params.userId])
     return (
         <>
             <Topbar />
@@ -39,12 +45,12 @@ export default function Profile() {
                         <div className="profileCover">
                             <img
                                 className="profileCoverImg"
-                                src={user.coverPicture ? imgUrl + user.coverPicture : "https://media.licdn.com/dms/image/D4E16AQF_ijRRfzc73Q/profile-displaybackgroundimage-shrink_350_1400/0/1701431293970?e=1710374400&v=beta&t=MYmA6NUjhIDcKUdV9hS0K9JXBSLMT04_eqf67DoMXGs"}
+                                src={user.coverPicture ? imgUrl + user.coverPicture : imgUrl + "nobg.jpg"}
                                 alt=""
                             />
                             <img
                                 className="profileUserImg"
-                                src={user.profilePicture ? imgUrl + user.profilePicture : "https://avatars.githubusercontent.com/u/149992669?v=4"}
+                                src={user.profilePicture ? imgUrl + user.profilePicture : imgUrl + "no-profile.webp"}
                                 alt=""
                             />
                         </div>

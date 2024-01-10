@@ -5,43 +5,26 @@ import Profile from "./pages/profile/Profile";
 import Register from "./pages/register/Register";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import { useContext } from "react";
-import SocialContext from "./ContextStore/SocialContext";
+
 function App() {
-  const { userinfo } = useContext(SocialContext);
   return (
     <>
       <BrowserRouter>
         <ToastContainer />
         <Routes>
-          <Route
-            path="/"
-            element={
-              localStorage.getItem("socialToken") ? (
-                <Home />
-              ) : (
-                <Navigate to="/login" />
-              )
-            }
-          />
-          <Route
-            path="/profile/:userId"
-            element={
-              localStorage.getItem("socialToken") ? (
-                <Profile />
-              ) : (
-                <Navigate to="/login" />
-              )
-            }
-          />
+          <Route path="/" element={<Home />} />
+          <Route path="/profile/:userId" element={<Profile />} />
           <Route
             path="/register"
-            element={userinfo ? <Navigate to="/" /> : <Register />}
+            element={
+              localStorage.getItem("socialToken") ? (
+                <Navigate to="/" />
+              ) : (
+                <Register />
+              )
+            }
           />
-          <Route
-            path="/login"
-            element={userinfo ? <Navigate to="/" /> : <Login />}
-          />
+          <Route path="/login" element={<Login />} />
         </Routes>
       </BrowserRouter>
     </>
