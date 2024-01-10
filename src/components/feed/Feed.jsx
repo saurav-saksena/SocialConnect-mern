@@ -8,7 +8,7 @@ import { Skeleton } from '@mui/material'
 export default function Feed({ userId }) {
     const [posts, setPosts] = useState([])
     const getTimelinePost = async () => {
-        let response = await fetch(userId ? "/posts/singleuserpost/" + userId : "/posts/timeline/65686033a016b1e7b142724b", {
+        let response = await fetch(userId ? "/posts/singleuserpost/" + userId : "/posts/allusers/allposts", {
             "method": "GET",
             headers: {
                 "Content-Type": "application/json"

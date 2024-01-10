@@ -15,7 +15,7 @@ app.use(cors());
 app.get("/", (req, res) => {
   res.send("This is backend of social media application !");
 });
-
+app.use("/public", express.static("public"));
 app.use("/api/users", usersRoute);
 app.use("/api/auth", authRoute);
 app.use("/api/posts", postsRoute);

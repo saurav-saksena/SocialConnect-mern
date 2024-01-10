@@ -13,6 +13,7 @@ export default function Post({ post }) {
     const { userinfo } = useContext(SocialContext)
     const [isLiked, setIsLiked] = useState(post.likes.includes(userinfo._id) ? true : false)
     const imgUrl = process.env.REACT_APP_IMG_URL
+    const posturl = process.env.REACT_APP_POST
     const formatter = buildFormatter(englishStrings)
     const getUserDetails = async () => {
         let response = await fetch("/users/" + post.userId, {
@@ -35,9 +36,25 @@ export default function Post({ post }) {
         // eslint-disable-next-line
     }, [])
 
-    const likeHandler = () => {
-        setLike(isLiked ? like - 1 : like + 1)
-        setIsLiked(!isLiked)
+    const likeHandler = async () => {
+        try {
+            let response = await fetch(`http://localhost:8000/api/posts/${post._id}/dislike`, {
+                method: "PUT",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify({ userId: userinfo._id })
+            })
+            response = await response.json()
+            if (response.success) {
+                setLike(isLiked ? like - 1 : like + 1)
+                setIsLiked(!isLiked)
+            }
+
+        } catch (error) {
+
+        }
+
     }
     return (
         <div className="post">
@@ -68,7 +85,7 @@ export default function Post({ post }) {
                 <div className="postCenter">
                     <span className="postText">{post.desc}</span>
                     {post.img !== "" &&
-                        <img className="postImg" src={imgUrl + "post/" + post.img} alt="..." />
+                        <img className="postImg" src={posturl + post.img} alt="..." />
                     }
                 </div>
                 <div className="postBottom">
