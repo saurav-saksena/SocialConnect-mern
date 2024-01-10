@@ -6,6 +6,7 @@ import { CircularProgress } from "@mui/material";
 export default function Login() {
     const [loginData, setLoginData] = useState({ email: "", password: "" })
     const [loading, setLoading] = useState(false)
+
     const { errorAlert } = useContext(SocialContext)
     const navigate = useNavigate()
     const handleChange = (e) => {
@@ -49,6 +50,7 @@ export default function Login() {
         }
         // eslint-disable-next-line
     })
+
     return (
         <div className="login">
             <div className="loginWrapper">
@@ -61,7 +63,7 @@ export default function Login() {
                 <div className="loginRight">
                     <form onSubmit={handleSubmit} className="loginBox">
 
-                        <input onChange={handleChange} required name="email" value={loginData.email} placeholder="Email" className="loginInput" />
+                        <input onChange={handleChange} type="email" required name="email" value={loginData.email} placeholder="Email" className="loginInput" />
                         <input placeholder="Password" required type="password" name="password" onChange={handleChange} value={loginData.password} className="loginInput" />
                         <button className="loginButton">{loading ? <CircularProgress color="inherit" /> : "Log In"}</button>
 

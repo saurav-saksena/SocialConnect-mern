@@ -5,6 +5,7 @@ import Profile from "./pages/profile/Profile";
 import Register from "./pages/register/Register";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import Updateprofile from "./pages/profile/Updateprofile";
 
 function App() {
   return (
@@ -14,6 +15,7 @@ function App() {
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/profile/:userId" element={<Profile />} />
+          <Route path="/updateprofile/:userId" element={<Updateprofile />} />
           <Route
             path="/register"
             element={

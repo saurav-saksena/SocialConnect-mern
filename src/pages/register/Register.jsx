@@ -1,11 +1,12 @@
 import { Link, useNavigate } from "react-router-dom";
 import "./register.css";
-import { useContext, useState } from "react";
+import { useContext, useEffect, useRef, useState } from "react";
 import SocialContext from "../../ContextStore/SocialContext";
 
 export default function Register() {
     const [registerData, setRegisterData] = useState({ username: "", email: "", password: "", confirmpassword: "" })
     const navigatge = useNavigate()
+    const ref = useRef()
     const { errorAlert } = useContext(SocialContext)
     const handleChange = (e) => {
         setRegisterData({ ...registerData, [e.target.name]: e.target.value })
@@ -36,6 +37,9 @@ export default function Register() {
             errorAlert("password do not match !")
         }
     }
+    useEffect(() => {
+        ref.current.focus()
+    })
     return (
         <div className="login">
             <div className="loginWrapper">
@@ -47,8 +51,8 @@ export default function Register() {
                 </div>
                 <div className="loginRight">
                     <form onSubmit={handleSubmit} className="loginBox">
-                        <input required name="username" onChange={handleChange} placeholder="Username" className="loginInput" />
-                        <input required name="email" onChange={handleChange} placeholder="Email" className="loginInput" />
+                        <input ref={ref} required name="username" onChange={handleChange} placeholder="Username" className="loginInput" />
+                        <input required type="email" name="email" onChange={handleChange} placeholder="Email" className="loginInput" />
                         <input type="password" required name="password" onChange={handleChange} placeholder="Password" className="loginInput" />
                         <input type="password" required name="confirmpassword" onChange={handleChange} placeholder="Password Again" className="loginInput" />
                         <button className="loginButton">Sign Up</button>

@@ -1,15 +1,17 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
 import "./post.css";
 import { MoreVert } from "@mui/icons-material";
 import TimeAgo from 'react-timeago'
 import englishStrings from "react-timeago/lib/language-strings/en";
 import buildFormatter from 'react-timeago/lib/formatters/buildFormatter'
 import { Link } from "react-router-dom";
+import SocialContext from "../../ContextStore/SocialContext";
 
 export default function Post({ post }) {
     const [like, setLike] = useState(post.likes.length)
-    const [isLiked, setIsLiked] = useState(post.likes.includes("65686033a016b1e7b142724b") ? true : false)
     const [user, setUser] = useState({})
+    const { userinfo } = useContext(SocialContext)
+    const [isLiked, setIsLiked] = useState(post.likes.includes(userinfo._id) ? true : false)
     const imgUrl = process.env.REACT_APP_IMG_URL
     const formatter = buildFormatter(englishStrings)
     const getUserDetails = async () => {

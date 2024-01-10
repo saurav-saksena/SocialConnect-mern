@@ -1,13 +1,15 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
 import "./profile.css";
 import Topbar from "../../components/topbar/Topbar";
 import Sidebar from "../../components/sidebar/Sidebar";
 import Feed from "../../components/feed/Feed";
 import Rightbar from "../../components/rightbar/Rightbar";
-import { useNavigate, useParams } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
+import SocialContext from "../../ContextStore/SocialContext";
 
 export default function Profile() {
     const [user, setUser] = useState({})
+    const { userinfo } = useContext(SocialContext)
     const params = useParams()
     const navigate = useNavigate()
     const imgUrl = process.env.REACT_APP_IMG_URL
@@ -58,6 +60,7 @@ export default function Profile() {
                             <h4 className="profileInfoName">{user.username}</h4>
                             <span className="profileInfoDesc">{user.desc}
                             </span>
+                            {userinfo._id === user._id && <Link className="updateprofile" to={`/updateprofile/${userinfo._id}`}>update_profile</Link>}
                         </div>
                     </div>
                     <div className="profileRightBottom">

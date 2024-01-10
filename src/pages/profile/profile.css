@@ -49,3 +49,13 @@
 .profileRightBottom {
   display: flex;
 }
+.updateprofile {
+  color: rgb(43, 28, 251);
+  text-decoration: none;
+  font-weight: bold;
+  padding: 12px;
+}
+.updateprofile:hover {
+  color: rgb(49, 49, 169);
+  text-decoration: underline;
+}
