@@ -16,16 +16,7 @@ function App() {
           <Route path="/" element={<Home />} />
           <Route path="/profile/:userId" element={<Profile />} />
           <Route path="/updateprofile/:userId" element={<Updateprofile />} />
-          <Route
-            path="/register"
-            element={
-              localStorage.getItem("socialToken") ? (
-                <Navigate to="/" />
-              ) : (
-                <Register />
-              )
-            }
-          />
+          <Route path="/register" element={<Register />} />
           <Route path="/login" element={<Login />} />
         </Routes>
       </BrowserRouter>

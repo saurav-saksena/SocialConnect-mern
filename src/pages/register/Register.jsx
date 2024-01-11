@@ -5,7 +5,7 @@ import SocialContext from "../../ContextStore/SocialContext";
 
 export default function Register() {
     const [registerData, setRegisterData] = useState({ username: "", email: "", password: "", confirmpassword: "" })
-    const navigatge = useNavigate()
+    const navigate = useNavigate()
     const ref = useRef()
     const { errorAlert } = useContext(SocialContext)
     const handleChange = (e) => {
@@ -21,7 +21,7 @@ export default function Register() {
         })
         let result = await response.json()
         if (result.success) {
-            navigatge("/login")
+            navigate("/login")
 
         } else {
             errorAlert(result.msg)
@@ -38,7 +38,10 @@ export default function Register() {
         }
     }
     useEffect(() => {
-        ref.current.focus()
+        if (localStorage.getItem("socialToken")) {
+            navigate("/")
+        }
+        // eslint-disable-next-line
     })
     return (
         <div className="login">

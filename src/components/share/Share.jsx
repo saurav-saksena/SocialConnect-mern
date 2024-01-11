@@ -7,7 +7,7 @@ import CancelPresentationIcon from '@mui/icons-material/CancelPresentation';
 export default function Share() {
     const [desc, setDesc] = useState("")
     const [img, setImg] = useState(null)
-    const { userinfo } = useContext(SocialContext)
+    const { userinfo, errorAlert } = useContext(SocialContext)
     const imgUrl = process.env.REACT_APP_IMG_URL
     const postData = async () => {
         let item = new FormData()
@@ -22,7 +22,7 @@ export default function Share() {
         if (response.success) {
             window.location.reload();
         } else {
-            alert(response.msg)
+            errorAlert(response.msg)
         }
     }
     return (
