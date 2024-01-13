@@ -83,4 +83,45 @@ router.put("/:id/unfollow", async (req, res) => {
       .send({ msg: "you can not follow or unfollow your own account !" });
   }
 });
+
+//get a user following detials
+router.get("/followings/:id", async (req, res) => {
+  try {
+    const user = await User.findById(req.params.id);
+    const followings = await Promise.all(
+      user.followings.map((list) => {
+        return User.findById(list);
+      })
+    );
+    let List = [];
+    followings.map((friend) => {
+      const { _id, username, profilePicture } = friend;
+      List.push({ _id, username, profilePicture });
+    });
+    res.send({ success: true, data: List });
+  } catch (error) {
+    res.status(500).send({ msg: "server errro" });
+  }
+});
+
+//get a user's followes details
+router.get("/followers/:id", async (req, res) => {
+  try {
+    const user = await User.findById(req.params.id);
+    const followers = await Promise.all(
+      user.followers.map((list) => {
+        return User.findById(list);
+      })
+    );
+    let Lists = [];
+    followers.map((friend) => {
+      const { _id, username, profilePicture } = friend;
+      Lists.push({ _id, username, profilePicture });
+    });
+    res.send({ success: true, data: Lists });
+  } catch (error) {
+    res.status(500).send({ msg: "server errro" });
+  }
+});
+
 module.exports = router;

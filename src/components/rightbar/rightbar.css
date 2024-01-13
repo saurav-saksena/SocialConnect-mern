@@ -47,8 +47,63 @@
 
 .rightbarInfo {
   margin-bottom: 30px;
+  position: relative;
 }
-
+#followers--list--button,
+#followings--list--button {
+  cursor: pointer;
+  padding: 6px;
+  border-radius: 8px;
+  border: 1px solid transparent;
+  user-select: none;
+}
+#followers--list--button:hover,
+#followings--list--button:hover {
+  border: 1px solid gray;
+}
+.rightbar--followers--details {
+  position: absolute;
+  top: 0;
+  padding: 10px;
+  user-select: none;
+  background-color: antiquewhite;
+  width: 90%;
+  border-radius: 10px;
+}
+.rightbar--followers--details--hide {
+  width: 50%;
+  display: block;
+  background-color: rgb(255, 55, 55);
+  color: white;
+  text-align: center;
+  margin: 10px auto;
+  border: none;
+  outline: none;
+  font-size: 20px;
+  padding: 6px;
+  font-weight: 600;
+  border-radius: 12px;
+  cursor: pointer;
+}
+.followers--details--child {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 6px;
+}
+.followers--details--img {
+  height: 40px;
+  width: 40px;
+  border-radius: 50%;
+}
+.followers--details--name {
+  font-size: 16px;
+  width: 50%;
+}
+.followers--details--profile:hover {
+  color: blue;
+  text-decoration: underline;
+}
 .rightbarInfoItem {
   margin-bottom: 10px;
 }
@@ -57,6 +112,7 @@
   font-weight: 500;
   margin-right: 15px;
   color: #555;
+  padding-left: 8px;
 }
 
 .rightbarInfoValue {

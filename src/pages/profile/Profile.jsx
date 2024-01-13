@@ -10,6 +10,7 @@ import SocialContext from "../../ContextStore/SocialContext";
 export default function Profile() {
     const [user, setUser] = useState({})
     const { userinfo } = useContext(SocialContext)
+    const [follow, setFollow] = useState([])
     const params = useParams()
     const navigate = useNavigate()
     const imgUrl = process.env.REACT_APP_IMG_URL
@@ -24,10 +25,29 @@ export default function Profile() {
         if (result.success) {
 
             setUser(result.user)
+            setFollow(result.user.followers)
         } else {
             alert(result.msg)
         }
     }
+    // logic for follow or unfollow a user 
+    const followUser = async () => {
+        let response = await fetch(follow.includes(userinfo._id) ? `http://localhost:8000/api/users/${user._id}/unfollow` : `http://localhost:8000/api/users/${user._id}/follow`, {
+            method: "PUT",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({ userId: userinfo._id })
+        })
+        response = await response.json()
+        if (response.success) {
+
+            getUserDetails()
+        } else {
+            console.log(response.msg)
+        }
+    }
+
     useEffect(() => {
         if (localStorage.getItem("socialToken")) {
 
@@ -60,7 +80,8 @@ export default function Profile() {
                             <h4 className="profileInfoName">{user.username}</h4>
                             <span className="profileInfoDesc">{user.desc}
                             </span>
-                            {userinfo._id === user._id && <Link className="updateprofile" to={`/updateprofile/${userinfo._id}`}>update_profile</Link>}
+                            {userinfo._id === user._id && <Link className="updateprofile" to={`/updateprofile/${userinfo.username}`}>update_profile</Link>}
+                            {userinfo._id !== user._id && <span onClick={followUser} className="follow--button">{follow.includes(userinfo._id) ? "unfollow" : "follow"}</span>}
                         </div>
                     </div>
                     <div className="profileRightBottom">

@@ -1,6 +1,8 @@
 import "./rightbar.css";
 import { Users } from "../../dummyData";
 import Online from "../online/Online";
+import { Link } from "react-router-dom";
+import { useState } from "react";
 
 
 export default function Rightbar({ user }) {
@@ -31,10 +33,50 @@ export default function Rightbar({ user }) {
     };
 
     const ProfileRightbar = () => {
+        const [followersContain, setFollowersContain] = useState(false)
+        const [fetchword, setFetchword] = useState("")
+        const [followersContaindata, setFollowersContaindata] = useState([])
+        const getFollowingsList = async (word) => {
+            setFetchword(word)
+            if (user.followings.length > 0) {
+                setFollowersContain(true)
+                let response = await fetch("http://localhost:8000/api/users/followings/" + user._id, {
+                    method: "GET"
+                })
+                response = await response.json()
+                if (response.success) {
+                    setFollowersContain(true)
+                    setFollowersContaindata(response.data)
+                }
+            }
+        }
+        const getFollowersList = async (word) => {
+            setFetchword(word)
+            if (user.followers.length > 0) {
+                setFollowersContain(true)
+                let response = await fetch("http://localhost:8000/api/users/followers/" + user._id, {
+                    method: "GET"
+                })
+                response = await response.json()
+                if (response.success) {
+                    setFollowersContain(true)
+                    setFollowersContaindata(response.data)
+                }
+
+            }
+        }
         return (
             <>
-                <h4 className="rightbarTitle">User information</h4>
+                <h4 className="rightbarTitle">{user.username} information</h4>
                 <div className="rightbarInfo">
+                    <div className="rightbarInfoItem">
+                        <span className="rightbarInfoKey" onClick={() => getFollowingsList("followings")} id="followings--list--button">Followings :</span>
+                        <span className="rightbarInfoValue">{user.followings ? user.followings.length : "..."}</span>
+                    </div>
+                    <div className="rightbarInfoItem">
+                        <span className="rightbarInfoKey" onClick={() => getFollowersList("followers")} id="followers--list--button" >Followers :</span>
+                        <span className="rightbarInfoValue">{user.followers ? user.followers.length : "..."}</span>
+                    </div>
                     <div className="rightbarInfoItem">
                         <span className="rightbarInfoKey">City:</span>
                         <span className="rightbarInfoValue">{user.city}</span>
@@ -46,6 +88,24 @@ export default function Rightbar({ user }) {
                     <div className="rightbarInfoItem">
                         <span className="rightbarInfoKey">Relationship:</span>
                         <span className="rightbarInfoValue">Single</span>
+                    </div>
+                    <div className="rightbar--followers--details" style={{ display: followersContain ? "block" : "none" }}>
+                        <p>{fetchword}</p>
+                        <div style={{ maxHeight: "200px", overflow: "auto" }}>
+                            {followersContaindata.length && followersContaindata.map((item) => {
+                                return <div className="followers--details--child" key={item._id}>
+                                    <img src={item.profilePicture ? imgUrl + item.profilePicture : imgUrl + "no-profile.webp"} alt="..." className="followers--details--img" />
+                                    <span className="followers--details--name">{item.username}</span>
+
+                                    <Link to={`/profile/${item._id}`} className="followers--details--profile">view profile</Link>
+
+                                </div>
+                            })
+                            }
+
+
+                        </div>
+                        <button onClick={() => { setFollowersContain(false); setFetchword("") }} className="rightbar--followers--details--hide">cancel</button>
                     </div>
                 </div>
                 <h4 className="rightbarTitle">User friends</h4>

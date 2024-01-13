@@ -59,3 +59,19 @@
   color: rgb(49, 49, 169);
   text-decoration: underline;
 }
+.follow--button {
+  padding: 8px;
+  border-radius: 4px;
+  background-color: rgb(9, 27, 224);
+  color: white;
+  text-align: center;
+  font-size: 18px;
+  font-weight: bold;
+  user-select: none;
+  margin-bottom: 8px;
+  cursor: pointer;
+  letter-spacing: 1.4px;
+}
+.follow--button:hover {
+  background-color: rgb(36, 36, 101);
+}
