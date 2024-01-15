@@ -14,6 +14,7 @@ export default function Profile() {
     const params = useParams()
     const navigate = useNavigate()
     const imgUrl = process.env.REACT_APP_IMG_URL
+    const userimg = process.env.REACT_APP_USER
     const getUserDetails = async () => {
         let response = await fetch("/users/" + params.userId, {
             "method": "GET",
@@ -67,12 +68,12 @@ export default function Profile() {
                         <div className="profileCover">
                             <img
                                 className="profileCoverImg"
-                                src={user.coverPicture ? imgUrl + user.coverPicture : imgUrl + "nobg.jpg"}
+                                src={user.coverPicture ? userimg + user.coverPicture : imgUrl + "nobg.jpg"}
                                 alt=""
                             />
                             <img
                                 className="profileUserImg"
-                                src={user.profilePicture ? imgUrl + user.profilePicture : imgUrl + "no-profile.webp"}
+                                src={user.profilePicture ? userimg + user.profilePicture : imgUrl + "no-profile.webp"}
                                 alt=""
                             />
                         </div>
@@ -80,7 +81,7 @@ export default function Profile() {
                             <h4 className="profileInfoName">{user.username}</h4>
                             <span className="profileInfoDesc">{user.desc}
                             </span>
-                            {userinfo._id === user._id && <Link className="updateprofile" to={`/updateprofile/${userinfo.username}`}>update_profile</Link>}
+                            {userinfo._id === user._id && <Link className="updateprofile" to={`/updateprofile/${userinfo._id}`}>update_profile</Link>}
                             {userinfo._id !== user._id && <span onClick={followUser} className="follow--button">{follow.includes(userinfo._id) ? "unfollow" : "follow"}</span>}
                         </div>
                     </div>

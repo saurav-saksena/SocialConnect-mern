@@ -14,6 +14,7 @@ export default function Post({ post }) {
     const [isLiked, setIsLiked] = useState(post.likes.includes(userinfo._id) ? true : false)
     const imgUrl = process.env.REACT_APP_IMG_URL
     const posturl = process.env.REACT_APP_POST
+    const userimg = process.env.REACT_APP_USER
     const formatter = buildFormatter(englishStrings)
     const getUserDetails = async () => {
         let response = await fetch("/users/" + post.userId, {
@@ -64,7 +65,7 @@ export default function Post({ post }) {
                         <Link to={`/profile/${user._id}`} style={{ textDecoration: "none" }}>
                             <img
                                 className="postProfileImg"
-                                src={user.profilePicture ? imgUrl + user.profilePicture : imgUrl + "no-profile.webp"}
+                                src={user.profilePicture ? userimg + user.profilePicture : imgUrl + "no-profile.webp"}
                                 alt=""
                             />
                         </Link>

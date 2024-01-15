@@ -1,21 +1,57 @@
 const router = require("express").Router();
 const User = require("../models/User");
+const fs = require("fs");
+const multer = require("multer");
+
+//multer logic to save pic in a folder
+const storage = multer.diskStorage({
+  destination: function (req, file, cb) {
+    cb(null, "public/uploads/users");
+  },
+  filename: function (req, file, cb) {
+    cb(null, Date.now() + file.originalname);
+  },
+  size: 10485760, //10MB Limit
+});
+const upload = multer({ storage: storage });
 
 //update user
-router.put("/:id", async (req, res) => {
-  if (req.body.userId === req.params.id || req.body.isAdmin) {
+router.put(
+  "/:id",
+  upload.fields([{ name: "coverPicture" }, { name: "profilePicture" }]),
+  async (req, res) => {
     try {
-      const user = await User.findByIdAndUpdate(req.params.id, {
-        $set: req.body,
-      });
-      res.send({ success: "account has been updated !" });
+      if (req.params.id !== req.body.userId) {
+        return res.status(401).send({ msg: "you can not update this profile" });
+      }
+      let data = await User.findById(req.params.id);
+      if (data) {
+        data.desc = req.body.desc;
+        data.from = req.body.from;
+        data.city = req.body.city;
+        data.relationship = req.body.relationship;
+        if (req.files.coverPicture) {
+          try {
+            fs.unlinkSync("public/uploads/users/" + data.coverPicture);
+          } catch (error) {}
+          data.coverPicture = req.files.coverPicture[0].filename;
+        }
+        if (req.files.profilePicture) {
+          try {
+            fs.unlinkSync("public/uploads/users/" + data.profilePicture);
+          } catch (error) {}
+          data.profilePicture = req.files.profilePicture[0].filename;
+        }
+        await data.save();
+        res.send({ success: true, data: data });
+      } else {
+        res.status(404).send({ msg: "user record not find" });
+      }
     } catch (error) {
       res.status(500).send({ msg: "server error" });
     }
-  } else {
-    return res.status(401).send({ msg: "you can only update your profile !" });
   }
-});
+);
 
 // delete user
 router.delete("/:id", async (req, res) => {

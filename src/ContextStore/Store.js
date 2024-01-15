@@ -7,7 +7,7 @@ export default function Store({ children }) {
   useEffect(() => {
     const token = localStorage.getItem("socialToken");
     if (token) {
-      verifiedUserDetails(token);
+      verifiedUserDetails();
     }
     // eslint-disable-next-line
   }, []);
@@ -55,7 +55,7 @@ export default function Store({ children }) {
         method: "GET",
         headers: {
           "Content-Type": "application/json",
-          Authorization: token,
+          Authorization: localStorage.getItem("socialToken"),
         },
       }
     );

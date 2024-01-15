@@ -21,7 +21,7 @@
   width: 150px;
   height: 150px;
   border-radius: 50%;
-  /* object-fit: cover; */
+  object-fit: cover;
   position: absolute;
   left: 0;
   right: 0;
@@ -43,7 +43,7 @@
 
 .profileInfoDesc {
   font-weight: 300;
-  padding-bottom: 20px;
+  padding-bottom: 10px;
 }
 
 .profileRightBottom {
@@ -53,7 +53,7 @@
   color: rgb(43, 28, 251);
   text-decoration: none;
   font-weight: bold;
-  padding: 12px;
+  padding: 4px;
 }
 .updateprofile:hover {
   color: rgb(49, 49, 169);
@@ -74,4 +74,41 @@
 }
 .follow--button:hover {
   background-color: rgb(36, 36, 101);
+}
+
+.update--container {
+  width: 700px;
+  display: flex;
+  flex-direction: column;
+  background-color: antiquewhite;
+  border: 2px solid red;
+  margin: 50px auto;
+  border-radius: 8px;
+  padding: 12px;
+}
+.update--item {
+  display: flex;
+  padding: 10px;
+}
+input[type="text"],
+select {
+  display: block;
+  width: 50%;
+  padding: 8px;
+  border-radius: 8px;
+  font-size: 16px;
+  font-weight: bold;
+}
+#notify,
+label {
+  color: rgb(19, 147, 7);
+  display: block;
+  width: 40%;
+  font-weight: bold;
+  font-size: 16px;
+}
+.update--button {
+  padding: 6px;
+  font-size: 18px;
+  font-weight: bold;
 }

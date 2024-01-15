@@ -9,6 +9,7 @@ export default function Rightbar({ user }) {
 
 
     const imgUrl = process.env.REACT_APP_IMG_URL
+    const userimg = process.env.REACT_APP_USER
     const HomeRightbar = () => {
         return (
             <>
@@ -79,22 +80,22 @@ export default function Rightbar({ user }) {
                     </div>
                     <div className="rightbarInfoItem">
                         <span className="rightbarInfoKey">City:</span>
-                        <span className="rightbarInfoValue">{user.city}</span>
+                        <span className="rightbarInfoValue">{user.city ? user.city : "_ _ _"}</span>
                     </div>
                     <div className="rightbarInfoItem">
                         <span className="rightbarInfoKey">From:</span>
-                        <span className="rightbarInfoValue">{user.from}</span>
+                        <span className="rightbarInfoValue">{user.from ? user.from : "_ _ _"}</span>
                     </div>
                     <div className="rightbarInfoItem">
                         <span className="rightbarInfoKey">Relationship:</span>
-                        <span className="rightbarInfoValue">Single</span>
+                        <span className="rightbarInfoValue">{user.relationship ? user.relationship : "_ _ _"}</span>
                     </div>
                     <div className="rightbar--followers--details" style={{ display: followersContain ? "block" : "none" }}>
                         <p>{fetchword}</p>
                         <div style={{ maxHeight: "200px", overflow: "auto" }}>
                             {followersContaindata.length && followersContaindata.map((item) => {
                                 return <div className="followers--details--child" key={item._id}>
-                                    <img src={item.profilePicture ? imgUrl + item.profilePicture : imgUrl + "no-profile.webp"} alt="..." className="followers--details--img" />
+                                    <img src={item.profilePicture ? userimg + item.profilePicture : imgUrl + "no-profile.webp"} alt="..." className="followers--details--img" />
                                     <span className="followers--details--name">{item.username}</span>
 
                                     <Link to={`/profile/${item._id}`} className="followers--details--profile">view profile</Link>
@@ -108,7 +109,7 @@ export default function Rightbar({ user }) {
                         <button onClick={() => { setFollowersContain(false); setFetchword("") }} className="rightbar--followers--details--hide">cancel</button>
                     </div>
                 </div>
-                <h4 className="rightbarTitle">User friends</h4>
+                <h4 className="rightbarTitle">friends of {user.username}</h4>
                 <div className="rightbarFollowings">
                     <div className="rightbarFollowing">
                         <img

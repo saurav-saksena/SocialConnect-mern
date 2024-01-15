@@ -51,8 +51,8 @@ const UserSchema = new mongoose.Schema(
       default: "",
     },
     relationship: {
-      type: Number,
-      enum: [1, 2, 3],
+      type: String,
+      default: "",
     },
   },
   { timestamps: true }

@@ -11,6 +11,7 @@ import SocialContext from '../../ContextStore/SocialContext';
 export default function Topbar() {
     const { userinfo } = useContext(SocialContext)
     const imgUrl = process.env.REACT_APP_IMG_URL
+    const userimg = process.env.REACT_APP_USER
     return (
         <div className="topbarContainer">
             <div className="topbarLeft">
@@ -46,7 +47,7 @@ export default function Topbar() {
                 </div>
                 <Link to={`/profile/${userinfo._id}`}>
 
-                    <img src={userinfo.profilePicture ? imgUrl + userinfo.profilePicture : imgUrl + "no-profile.webp"} alt='profile' title='profile' className='topbarImg' />
+                    <img src={userinfo.profilePicture ? userimg + userinfo.profilePicture : imgUrl + "no-profile.webp"} alt='profile' title='profile' className='topbarImg' />
                 </Link>
             </div>
         </div>

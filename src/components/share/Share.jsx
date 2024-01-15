@@ -9,6 +9,7 @@ export default function Share() {
     const [img, setImg] = useState(null)
     const { userinfo, errorAlert } = useContext(SocialContext)
     const imgUrl = process.env.REACT_APP_IMG_URL
+    const userimg = process.env.REACT_APP_USER
     const postData = async () => {
         let item = new FormData()
         item.append("userId", userinfo._id)
@@ -30,7 +31,7 @@ export default function Share() {
             <div className="shareWrapper">
                 <div className="shareTop">
                     <Link to={`/profile/${userinfo._id}`}>
-                        <img className="shareProfileImg" src={userinfo.profilePicture ? imgUrl + userinfo.profilePicture : imgUrl + "no-profile.webp"} alt="" />
+                        <img className="shareProfileImg" src={userinfo.profilePicture ? userimg + userinfo.profilePicture : imgUrl + "no-profile.webp"} alt="" />
                     </Link>
                     <input
                         placeholder={`What's in your mind ${userinfo.username} ?`}
