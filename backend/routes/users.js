@@ -160,4 +160,31 @@ router.get("/followers/:id", async (req, res) => {
   }
 });
 
+//get user's friend list
+router.get("/friendlist/:id", async (req, res) => {
+  try {
+    const user = await User.findById(req.params.id);
+    let friendlist = user.followings.filter((item) =>
+      user.followers.includes(item)
+    );
+    if (friendlist.length === 0) {
+      return res.send({ success: true, msg: "no friend", data: friendlist });
+    }
+
+    let frienddetails = await Promise.all(
+      friendlist.map((frndid) => {
+        return User.findById(frndid);
+      })
+    );
+    let Lists = [];
+    frienddetails.map((friend) => {
+      const { _id, username, profilePicture } = friend;
+      Lists.push({ _id, username, profilePicture });
+    });
+    res.send({ success: true, data: Lists });
+  } catch (error) {
+    res.status(500).send({ msg: "server errro" });
+  }
+});
+
 module.exports = router;
