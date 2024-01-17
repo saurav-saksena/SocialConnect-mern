@@ -1,8 +1,8 @@
 import "./rightbar.css";
 import { Users } from "../../dummyData";
 import Online from "../online/Online";
-import { Link } from "react-router-dom";
-import { useState } from "react";
+import { Link, useParams } from "react-router-dom";
+import { useEffect, useState } from "react";
 
 
 export default function Rightbar({ user }) {
@@ -37,6 +37,8 @@ export default function Rightbar({ user }) {
         const [followersContain, setFollowersContain] = useState(false)
         const [fetchword, setFetchword] = useState("")
         const [followersContaindata, setFollowersContaindata] = useState([])
+        const [friend, setFriend] = useState([])
+        const params = useParams()
         const getFollowingsList = async (word) => {
             setFetchword(word)
             if (user.followings.length > 0) {
@@ -66,6 +68,20 @@ export default function Rightbar({ user }) {
 
             }
         }
+        const friendDetails = async () => {
+            let response = await fetch("http://localhost:8000/api/users/friendlist/" + params.userId, {
+                method: "GET"
+            })
+            response = await response.json()
+            if (response.success) {
+                setFriend(response.data)
+
+            }
+        }
+        useEffect(() => {
+            friendDetails()
+            // eslint-disable-next-line
+        }, [])
         return (
             <>
                 <h4 className="rightbarTitle">{user.username} information</h4>
@@ -111,54 +127,19 @@ export default function Rightbar({ user }) {
                 </div>
                 <h4 className="rightbarTitle">friends of {user.username}</h4>
                 <div className="rightbarFollowings">
-                    <div className="rightbarFollowing">
-                        <img
-                            src={`${imgUrl}user/10.jpg`}
-                            alt=""
-                            className="rightbarFollowingImg"
-                        />
-                        <span className="rightbarFollowingName">John Carter</span>
-                    </div>
-                    <div className="rightbarFollowing">
-                        <img
-                            src={`${imgUrl}user/2.jpg`}
-                            alt=""
-                            className="rightbarFollowingImg"
-                        />
-                        <span className="rightbarFollowingName">John Carter</span>
-                    </div>
-                    <div className="rightbarFollowing">
-                        <img
-                            src={`${imgUrl}user/3.jpg`}
-                            alt=""
-                            className="rightbarFollowingImg"
-                        />
-                        <span className="rightbarFollowingName">John Carter</span>
-                    </div>
-                    <div className="rightbarFollowing">
-                        <img
-                            src={`${imgUrl}user/4.jpg`}
-                            alt=""
-                            className="rightbarFollowingImg"
-                        />
-                        <span className="rightbarFollowingName">John Carter</span>
-                    </div>
-                    <div className="rightbarFollowing">
-                        <img
-                            src={`${imgUrl}user/5.jpg`}
-                            alt=""
-                            className="rightbarFollowingImg"
-                        />
-                        <span className="rightbarFollowingName">John Carter</span>
-                    </div>
-                    <div className="rightbarFollowing">
-                        <img
-                            src={`${imgUrl}user/6.jpg`}
-                            alt=""
-                            className="rightbarFollowingImg"
-                        />
-                        <span className="rightbarFollowingName">John Carter</span>
-                    </div>
+                    {friend.length > 0 ? friend.map((pal) => {
+                        return <div key={pal._id} className="rightbarFollowing">
+                            <img
+                                src={pal.profilePicture ? userimg + pal.profilePicture : imgUrl + "no-profile.webp"}
+                                alt=""
+                                className="rightbarFollowingImg"
+                            />
+                            <span className="rightbarFollowingName">{pal.username}</span>
+                        </div>
+                    }) : <h4>{user.username} haven't made any friend yet !</h4>
+
+                    }
+
                 </div>
             </>
         );
