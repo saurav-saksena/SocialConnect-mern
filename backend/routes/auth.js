@@ -67,7 +67,7 @@ router.post("/login", async (req, res) => {
       },
     };
     const authToken = Jwt.sign(data, process.env.SEC_KEY);
-    res.send({ success: true, authToken });
+    res.send({ success: true, authToken, user });
   } catch (error) {
     res.status(500).send({ msg: "something went wrong" });
   }
